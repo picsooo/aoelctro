@@ -69,7 +69,7 @@ const gz=[[10000,'40 – 60'],[12000,'50 – 70'],[14000,'60 – 80'],[16000,'70
 const ehero=`<section class="ehero"><div class="eh-txt"><span class="kick">${t('heroK')}</span><h1>${t('heroT')}</h1><p>${t('heroP')}</p>
 <div class="ctas"><a href="#/shop" class="btn">${t('cta1')}</a><a class="btn ghost" target="_blank" rel="noopener" href="${waLink(L=='ar'?'السلام عليكم':'Bonjour')}">${t('cta2')}</a></div>
 <ul class="eh-meta"><li><b>58</b><span>${L=='ar'?'ولاية توصيل':'wilayas livrées'}</span></li><li><b>24</b><span>${L=='ar'?'شهر ضمان':'mois de garantie'}</span></li><li><b>COD</b><span>${L=='ar'?'الدفع عند الاستلام':'paiement à la livraison'}</span></li></ul></div>
-<div class="eh-vis"><span class="disc"></span><img class="e1" src="${img('c_886445432')}" alt=""><img class="e2" src="${img('c_905724499')}" alt=""><img class="e3" src="${img('c_808451331')}" alt=""><span class="tagp">Tirex 4 en 1 <b>${fmt(46000)}</b></span></div></section>`;
+<div class="eh-vis photo wm"><img src="${img('862122261')}" alt=""><span class="tagp">${L=='ar'?'سخانات الماء':'Chauffe-eau'} <b>${L=='ar'?'ابتداءً من':'dès'} ${fmt(21500)}</b></span></div></section>`;
 if(V=='1')return ehero+homeRest();
 return `<section class="hero"><div class="hx"><span class="kick">${t('heroK')}</span><h1>${t('heroT')}</h1><p>${t('heroP')}</p>
 <div class="ctas"><a href="#/shop" class="btn">${t('cta1')}</a><a class="btn ghost" target="_blank" rel="noopener" href="${waLink(L=='ar'?'السلام عليكم، أريد الاستفسار عن':'Bonjour, je souhaite un renseignement sur')}">${t('cta2')}</a></div>

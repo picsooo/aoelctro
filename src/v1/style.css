@@ -169,3 +169,6 @@ body.shield #view,body.shield #hdr,body.shield #ftr{filter:blur(18px)}body.devt>
 [data-v="1"] .wm::after{opacity:.35;color:#999;text-shadow:none}
 @media(max-width:980px){[data-v="1"] main{padding:0 22px}[data-v="1"] .nav{padding:14px 22px}[data-v="1"] .ehero{grid-template-columns:1fr;min-height:0;padding-top:30px}[data-v="1"] .eh-vis{max-width:520px;margin:0 auto;width:100%}[data-v="1"] .cats{grid-template-columns:repeat(3,1fr)}[data-v="1"] .promo,.st-g{grid-template-columns:1fr}[data-v="1"] .pdg{grid-template-columns:1fr}[data-v="1"] .info{position:static}[data-v="1"] .catbar{justify-content:flex-start;gap:22px}}
 @media(max-width:620px){[data-v="1"] .cats{grid-template-columns:repeat(2,1fr)}[data-v="1"] .grid{grid-template-columns:1fr 1fr;gap:34px 12px}[data-v="1"] .nm{font-size:1rem}[data-v="1"] .sec{padding-top:70px}[data-v="1"] .eh-meta{gap:22px}[data-v="1"] .reas{grid-template-columns:1fr 1fr}[data-v="1"] .promo>div{padding:30px 22px}}
+[data-v="1"] .eh-vis.photo{aspect-ratio:4/5;max-height:680px;overflow:visible}
+[data-v="1"] .eh-vis.photo>img{position:static;width:100%;height:100%;object-fit:cover;filter:none;animation:none}
+[data-v="1"] .eh-vis.photo .tagp{top:auto;bottom:28px;right:auto;inset-inline-start:-24px}
