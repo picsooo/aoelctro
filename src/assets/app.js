@@ -51,7 +51,7 @@ $('#hdr').innerHTML=`<div class="topbar"><span>🚚 ${t('r1')} · ${t('r1s')}</s
 <form class="srch" id="sf"><input id="q" type="search" placeholder="${t('search')}" autocomplete="off"><button aria-label="ok">⌕</button><div id="sug" class="sug"></div></form>
 <nav class="links"><a href="#/">${t('home')}</a><a href="#/shop">${t('shop')}</a><a href="#/about">${t('about')}</a></nav>
 <button class="lang" id="lb">${L=='ar'?'FR':'ع'}</button><button class="cbtn" id="cb" aria-label="cart">🛒<i id="cc">0</i></button></div>
-<div class="catbar">${A.cats.map(c=>`<a href="#/shop?c=${c.id}">${c.ic} ${cn(c)}</a>`).join('')}</div>`;
+<div class="catbar">${A.cats.map(c=>`<a href="#/shop?c=${c.id}">${V=='1'?'':c.ic+' '}${cn(c)}</a>`).join('')}</div>`;
 $('#lb').onclick=()=>{L=L=='ar'?'fr':'ar';st.set('lang',L);boot()};
 $('#cb').onclick=()=>openCart(1);
 $('#sf').onsubmit=e=>{e.preventDefault();location.hash='#/shop?q='+encodeURIComponent($('#q').value)};
@@ -80,9 +80,9 @@ ${V=='2'?`<div class="marq"><div>${Array(2).fill(A.cats.map(c=>`<span>${c.ic} ${
 <section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id),ck=c.im||p.im[0];const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${ck.startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(ck)}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
 <section class="sec"><div class="sh"><h2>${t('best')}</h2><a href="#/shop">${t('all')} →</a></div><div class="grid">${f.map(card).join('')}</div></section>
 <section class="promo wm"><img loading="lazy" class="${tb.im[0].startsWith('c_')?'pcut':''}" src="${img(tb.im[0])}" alt=""><div><span class="kick">-${Math.round((1-tb.pr/tb.old)*100)}%</span><h2>${t('promoT')}</h2><p>${t('promoP')}</p><div class="pr"><b>${fmt(tb.pr)}</b><s>${fmt(tb.old)}</s></div><a href="#/p/tabouna" class="btn">${t('buy')}</a></div></section>
-<section class="sec"><div class="sh"><h2>🔥 ${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${V=='1'?'':'🔥 '}${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
 <section class="guide rv"><div><h2>${t('guideT')}</h2><p>${t('guideP')}</p></div><table>${gz.map(g=>`<tr><td>${g[0].toLocaleString('fr-FR')} kcal/h</td><td>→</td><td><b>${g[1]} m²</b></td></tr>`).join('')}</table><p class="warn">⚠️ ${L=='ar'?'التهوية و كاشف أول أكسيد الكربون ضروريان.':'Aération et détecteur de CO indispensables.'}</p></section>
-<section class="sec"><div class="sh"><h2>💧 ${cn(A.cats[1])}</h2><a href="#/shop?c=eau">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='eau').map(card).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${V=='1'?'':'💧 '}${cn(A.cats[1])}</h2><a href="#/shop?c=eau">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='eau').map(card).join('')}</div></section>
 ${storeBlock()}`}
 function homeRest(){const tb=P('tabouna'),f=A.p.filter(p=>p.tag);const gz=[[10000,'40 – 60'],[12000,'50 – 70'],[14000,'60 – 80'],[16000,'70 – 90']];return `
 ${V=='2'?`<div class="marq"><div>${Array(2).fill(A.cats.map(c=>`<span>${c.ic} ${cn(c)}</span>`).join('')+`<span>🚚 ${t('r1')}</span><span>💵 ${t('r2')}</span>`).join('')}</div></div>`:''}
@@ -90,9 +90,9 @@ ${V=='2'?`<div class="marq"><div>${Array(2).fill(A.cats.map(c=>`<span>${c.ic} ${
 <section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id),ck=c.im||p.im[0];const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${ck.startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(ck)}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
 <section class="sec"><div class="sh"><h2>${t('best')}</h2><a href="#/shop">${t('all')} →</a></div><div class="grid">${f.map(card).join('')}</div></section>
 <section class="promo wm"><img loading="lazy" class="${tb.im[0].startsWith('c_')?'pcut':''}" src="${img(tb.im[0])}" alt=""><div><span class="kick">-${Math.round((1-tb.pr/tb.old)*100)}%</span><h2>${t('promoT')}</h2><p>${t('promoP')}</p><div class="pr"><b>${fmt(tb.pr)}</b><s>${fmt(tb.old)}</s></div><a href="#/p/tabouna" class="btn">${t('buy')}</a></div></section>
-<section class="sec"><div class="sh"><h2>🔥 ${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${V=='1'?'':'🔥 '}${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
 <section class="guide rv"><div><h2>${t('guideT')}</h2><p>${t('guideP')}</p></div><table>${gz.map(g=>`<tr><td>${g[0].toLocaleString('fr-FR')} kcal/h</td><td>→</td><td><b>${g[1]} m²</b></td></tr>`).join('')}</table><p class="warn">⚠️ ${L=='ar'?'التهوية و كاشف أول أكسيد الكربون ضروريان.':'Aération et détecteur de CO indispensables.'}</p></section>
-<section class="sec"><div class="sh"><h2>💧 ${cn(A.cats[1])}</h2><a href="#/shop?c=eau">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='eau').map(card).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${V=='1'?'':'💧 '}${cn(A.cats[1])}</h2><a href="#/shop?c=eau">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='eau').map(card).join('')}</div></section>
 ${storeBlock()}`}
 function storeBlock(){return `<section class="store"><div class="st-g"><div class="st-img wm"><img loading="lazy" src="${img('cover')}" alt="AO Electro Ghardaïa"></div>
 <div class="st-txt"><span class="kick">${t('about')}</span><h2>${t('storeT')}</h2><p>${t('storeP')}</p>
@@ -105,8 +105,8 @@ const brands=[...new Set(A.p.filter(p=>!c||p.cat==c).map(p=>p.b))].filter(x=>x!=
 const u=(k,v)=>{const n=new URLSearchParams(qs);v?n.set(k,v):n.delete(k);return '#/shop?'+n};
 const cc=A.cats.find(x=>x.id==c);
 return `<section class="shopw"><div class="crumb"><a href="#/">${t('home')}</a> / ${cc?cn(cc):t('shop')}${q?` / « ${esc(q)} »`:''}</div>
-<h1>${cc?cc.ic+' '+cn(cc):t('shop')}</h1>
-<div class="chips"><a href="${u('c','')}" class="${!c?'on':''}">${t('allc')}</a>${A.cats.map(x=>`<a href="${u('c',x.id)}" class="${c==x.id?'on':''}">${x.ic} ${cn(x)}</a>`).join('')}</div>
+<h1>${cc?(V=='1'?'':cc.ic+' ')+cn(cc):t('shop')}</h1>
+<div class="chips"><a href="${u('c','')}" class="${!c?'on':''}">${t('allc')}</a>${A.cats.map(x=>`<a href="${u('c',x.id)}" class="${c==x.id?'on':''}">${V=='1'?'':x.ic+' '}${cn(x)}</a>`).join('')}</div>
 <div class="tools"><span>${r.length} ${t('res')}</span><div><select id="fb"><option value="">${L=='ar'?'كل العلامات':'Toutes marques'}</option>${brands.map(x=>`<option ${x==b?'selected':''}>${esc(x)}</option>`).join('')}</select>
 <select id="fs">${['s0','s1','s2'].map((k,i)=>`<option value="${i}" ${so==i?'selected':''}>${t(k)}</option>`).join('')}</select></div></div>
 <div class="grid">${r.length?r.map(card).join(''):`<p class="none">${t('none')}</p>`}</div></section>`}
