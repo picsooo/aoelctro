@@ -41,7 +41,7 @@ s:["3 robinets réglables","Robinets en cuivre","Propane ou butane","Alliage fer
 s:["Inox anti-rouille","Allumage automatique","Gaz naturel et butane","Brûleurs en cuivre"],sa:["فولاذ مقاوم للصدأ","إشعال أوتوماتيكي","غاز طبيعي و بوتان","شعلات نحاسية"]},
 {id:"petrin-bomann",cat:"cuisine",b:"Bomann",fr:"Pétrin Bomann — robot pâtissier",ar:"عجانة بومان",pr:22000,im:["794394753","808802516","808565025","814800218","802597612"],tag:"hot",
 s:["Pain, gâteaux, pizza","Technologie allemande","Plusieurs capacités"],sa:["للخبز و الحلويات و البيتزا","تقنية ألمانية","عدة أحجام"]},
-{id:"petrins",cat:"cuisine",b:"Multi-marques",fr:"Collection pétrins — toutes marques",ar:"تشكيلة العجانات",pr:18900,im:["825267220","825267354","825350891","825267239","825267530","825351036","825351105"],
+{id:"petrins",cat:"cuisine",b:"Multi-marques",fr:"Collection pétrins — toutes marques",ar:"تشكيلة العجانات",pr:18900,im:["825267220","825350891","825267239","825267530","825351036","825351105"],
 s:["Modèles et tailles variés","Marques connues en Algérie"],sa:["موديلات و أحجام مختلفة","أشهر الماركات في السوق"]},
 {id:"rack",cat:"cuisine",b:"Rack Kitchen",fr:"Étagère de cuisine à roulettes",ar:"رفوف المطبخ العصرية",pr:7900,im:["795808541","820036991"],
 s:["Acier solide","Roulettes avec frein","Supporte pétrin, four, micro-ondes"],sa:["حديد متين","بالروايد مع فران","يرفد العجانة و الفور و الميكروند"]},
