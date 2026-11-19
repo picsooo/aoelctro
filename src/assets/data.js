@@ -3,11 +3,11 @@ shop:{name:"AO Electro",tel:"0782 33 29 42",telI:"+213782332942",wa:"21378233294
 addr_fr:"Ghardaïa — en face du Registre de commerce et d'Algérie Télécom (El Hadj Messaoud)",
 addr_ar:"غرداية — مقابل السجل التجاري و إتصالات الجزائر (الحاج مسعود)",fb:"https://www.facebook.com/share/14uDTtUUP2o/"},
 cats:[
-{id:"chauffage",fr:"Chauffage",ar:"التدفئة",ic:"🔥"},
-{id:"eau",fr:"Chauffe-eau & cumulus",ar:"سخانات الماء",ic:"💧"},
-{id:"cuisine",fr:"Cuisine & cuisson",ar:"المطبخ و الطهي",ic:"🍳"},
-{id:"petit",fr:"Petit électroménager",ar:"أجهزة صغيرة",ic:"☕"},
-{id:"linge",fr:"Lavage & repassage",ar:"الغسيل و الكي",ic:"🧺"}],
+{id:"chauffage",im:"c_907686438",fr:"Chauffage",ar:"التدفئة",ic:"🔥"},
+{id:"eau",im:"c_825266219",fr:"Chauffe-eau & cumulus",ar:"سخانات الماء",ic:"💧"},
+{id:"cuisine",im:"c_825351036",fr:"Cuisine & cuisson",ar:"المطبخ و الطهي",ic:"🍳"},
+{id:"petit",im:"c_905724499",fr:"Petit électroménager",ar:"أجهزة صغيرة",ic:"☕"},
+{id:"linge",im:"c_825266154",fr:"Lavage & repassage",ar:"الغسيل و الكي",ic:"🧺"}],
 p:[
 {id:"geant-gaz",cat:"chauffage",b:"Géant",fr:"Chauffage gaz naturel GN-120B / GN-145A",ar:"مدفأة غاز طبيعي Géant",pr:42500,old:46000,im:["c_888450738","888450738"],tag:"hot",
 s:["11 KW / 12 KW","Système de sécurité avancé","Garantie 24 mois","Détecteur de CO offert"],sa:["قوة 11 أو 12 كيلوواط","نظام أمان متطور","ضمان 24 شهراً","كاشف أحادي أكسيد الكربون هدية"],v:["GN-120B-NG · 11 KW","GN-145A-NG · 12 KW (+3 000 DA)"]},

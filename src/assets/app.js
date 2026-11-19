@@ -35,10 +35,10 @@ errTel:["رقم هاتف غير صحيح","Numéro invalide (05/06/07 + 8 chiffr
 added:["تمت الإضافة إلى السلة","Ajouté au panier"],prom:["عروض","Promo"],nw:["جديد","Nouveau"],ht:["مطلوب","Top vente"],
 };
 const t=k=>T[k]?T[k][L=='ar'?0:1]:k,nm=p=>L=='ar'?p.ar:p.fr,cn=c=>L=='ar'?c.ar:c.fr;
-const fmt=n=>n.toLocaleString('fr-FR').replace(/ | /g,' ')+' DA';
+const fmt=n=>'\u2066'+n.toLocaleString('fr-FR').replace(/[\u202f\u00a0]/g,' ')+' DA\u2069';
 const P=id=>A.p.find(x=>x.id==id),$=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const img=k=>IMG+k+(k.startsWith('c_')?'.webp':'.jpg');
-const badge=p=>p.stock===0?`<span class="bdg out">${t('out')}</span>`:p.tag?`<span class="bdg ${p.tag}">${t(p.tag=='promo'?'prom':p.tag=='new'?'nw':'ht')}</span>`:'';
+const badge=p=>p.stock===0?`<span class="bdg out">${t('out')}</span>`:p.tag?`<span class="bdg t-${p.tag}">${t(p.tag=='promo'?'prom':p.tag=='new'?'nw':'ht')}</span>`:'';
 function card(p,i){const d=p.old?Math.round((1-p.pr/p.old)*100):0;
 return `<article class="card rv" style="--i:${i||0}"><a href="#/p/${p.id}" class="ph wm ${p.im[0].startsWith('c_')?'cut':''}">${badge(p)}<img loading="lazy" src="${img(p.im[0])}" alt="${esc(p.fr)}">${p.im[1]?`<img loading="lazy" class="alt" src="${img(p.im[1])}" alt="">`:''}</a>
 <div class="cb"><span class="br">${esc(p.b)}</span><a href="#/p/${p.id}" class="nm">${esc(nm(p))}</a>
@@ -77,7 +77,7 @@ return `<section class="hero"><div class="hx"><span class="kick">${t('heroK')}</
 <div class="hv wm"><img src="${img('cover')}" alt=""><div class="hcard"><img src="${img('888450738')}" alt=""><div><small>Géant · 11 KW</small><b>${fmt(42500)}</b></div></div></div></section>
 ${V=='2'?`<div class="marq"><div>${Array(2).fill(A.cats.map(c=>`<span>${c.ic} ${cn(c)}</span>`).join('')+`<span>🚚 ${t('r1')}</span><span>💵 ${t('r2')}</span>`).join('')}</div></div>`:''}
 <section class="reas">${[['🚚','r1','r1s'],['💵','r2','r2s'],['🛡️','r3','r3s'],['🔧','r4','r4s']].map(r=>`<div class="rv"><i>${r[0]}</i><b>${t(r[1])}</b><small>${t(r[2])}</small></div>`).join('')}</section>
-<section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id);const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${p.im[0].startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(p.im[0])}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id),ck=c.im||p.im[0];const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${ck.startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(ck)}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
 <section class="sec"><div class="sh"><h2>${t('best')}</h2><a href="#/shop">${t('all')} →</a></div><div class="grid">${f.map(card).join('')}</div></section>
 <section class="promo wm"><img loading="lazy" class="${tb.im[0].startsWith('c_')?'pcut':''}" src="${img(tb.im[0])}" alt=""><div><span class="kick">-${Math.round((1-tb.pr/tb.old)*100)}%</span><h2>${t('promoT')}</h2><p>${t('promoP')}</p><div class="pr"><b>${fmt(tb.pr)}</b><s>${fmt(tb.old)}</s></div><a href="#/p/tabouna" class="btn">${t('buy')}</a></div></section>
 <section class="sec"><div class="sh"><h2>🔥 ${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
@@ -87,7 +87,7 @@ ${storeBlock()}`}
 function homeRest(){const tb=P('tabouna'),f=A.p.filter(p=>p.tag);const gz=[[10000,'40 – 60'],[12000,'50 – 70'],[14000,'60 – 80'],[16000,'70 – 90']];return `
 ${V=='2'?`<div class="marq"><div>${Array(2).fill(A.cats.map(c=>`<span>${c.ic} ${cn(c)}</span>`).join('')+`<span>🚚 ${t('r1')}</span><span>💵 ${t('r2')}</span>`).join('')}</div></div>`:''}
 <section class="reas">${[['🚚','r1','r1s'],['💵','r2','r2s'],['🛡️','r3','r3s'],['🔧','r4','r4s']].map(r=>`<div class="rv"><i>${r[0]}</i><b>${t(r[1])}</b><small>${t(r[2])}</small></div>`).join('')}</section>
-<section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id);const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${p.im[0].startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(p.im[0])}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id),ck=c.im||p.im[0];const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${ck.startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(ck)}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
 <section class="sec"><div class="sh"><h2>${t('best')}</h2><a href="#/shop">${t('all')} →</a></div><div class="grid">${f.map(card).join('')}</div></section>
 <section class="promo wm"><img loading="lazy" class="${tb.im[0].startsWith('c_')?'pcut':''}" src="${img(tb.im[0])}" alt=""><div><span class="kick">-${Math.round((1-tb.pr/tb.old)*100)}%</span><h2>${t('promoT')}</h2><p>${t('promoP')}</p><div class="pr"><b>${fmt(tb.pr)}</b><s>${fmt(tb.old)}</s></div><a href="#/p/tabouna" class="btn">${t('buy')}</a></div></section>
 <section class="sec"><div class="sh"><h2>🔥 ${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
