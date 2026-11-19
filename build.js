@@ -91,4 +91,8 @@ const ent=Object.entries(IMG);let ok=0;
 const q=ent.slice();async function w(){while(q.length){const[k,u]=q.shift();for(let a=0;a<3;a++){try{const r=await fetch(u,{headers:{'user-agent':'Mozilla/5.0'}});if(!r.ok)throw new Error(r.status);const b=Buffer.from(await r.arrayBuffer());fs.writeFileSync(`${D}/img/${k}.jpg`,b);ok++;break}catch(e){if(a==2)console.log('fail',k,e.message)}}}}
 await Promise.all(Array.from({length:8},w));
 console.log('images',ok,'/',ent.length);
+// export base64 bundles (pour sauvegarde des images dans le repo)
+fs.mkdirSync(D+'/b64',{recursive:true});let part=0,buf='',n=0;
+for(const f of fs.readdirSync(D+'/img').sort()){const b=fs.readFileSync(D+'/img/'+f).toString('base64');if(buf.length+b.length>1800000&&buf){fs.writeFileSync(`${D}/b64/p${part++}.txt`,buf);buf=''}buf+=f+':'+b+'\n';n++}
+if(buf)fs.writeFileSync(`${D}/b64/p${part++}.txt`,buf);fs.writeFileSync(D+'/b64/count.txt',String(part)+' '+n);console.log('b64 parts',part);
 })();
