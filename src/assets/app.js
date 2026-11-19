@@ -37,10 +37,10 @@ added:["تمت الإضافة إلى السلة","Ajouté au panier"],prom:["ع�
 const t=k=>T[k]?T[k][L=='ar'?0:1]:k,nm=p=>L=='ar'?p.ar:p.fr,cn=c=>L=='ar'?c.ar:c.fr;
 const fmt=n=>n.toLocaleString('fr-FR').replace(/ | /g,' ')+' DA';
 const P=id=>A.p.find(x=>x.id==id),$=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const img=k=>IMG+k+'.jpg';
+const img=k=>IMG+k+(k.startsWith('c_')?'.webp':'.jpg');
 const badge=p=>p.stock===0?`<span class="bdg out">${t('out')}</span>`:p.tag?`<span class="bdg ${p.tag}">${t(p.tag=='promo'?'prom':p.tag=='new'?'nw':'ht')}</span>`:'';
 function card(p,i){const d=p.old?Math.round((1-p.pr/p.old)*100):0;
-return `<article class="card rv" style="--i:${i||0}"><a href="#/p/${p.id}" class="ph wm">${badge(p)}<img loading="lazy" src="${img(p.im[0])}" alt="${esc(p.fr)}">${p.im[1]?`<img loading="lazy" class="alt" src="${img(p.im[1])}" alt="">`:''}</a>
+return `<article class="card rv" style="--i:${i||0}"><a href="#/p/${p.id}" class="ph wm ${p.im[0].startsWith('c_')?'cut':''}">${badge(p)}<img loading="lazy" src="${img(p.im[0])}" alt="${esc(p.fr)}">${p.im[1]?`<img loading="lazy" class="alt" src="${img(p.im[1])}" alt="">`:''}</a>
 <div class="cb"><span class="br">${esc(p.b)}</span><a href="#/p/${p.id}" class="nm">${esc(nm(p))}</a>
 <div class="pr"><b>${fmt(p.pr)}</b>${p.old?`<s>${fmt(p.old)}</s><em>-${d}%</em>`:''}</div>
 <button class="add" data-add="${p.id}" ${p.stock===0?'disabled':''}>${p.stock===0?t('out'):t('add')}</button></div></article>`}
@@ -66,22 +66,38 @@ function footer(){$('#ftr').innerHTML=`<div class="fg"><div><div class="logo"><i
 <div class="fb2"><span>© ${new Date().getFullYear()} AO Electro — Ghardaïa</span><span>${t('note0')} · Webminds</span></div>`}
 function home(){const f=A.p.filter(p=>p.tag),tb=P('tabouna');
 const gz=[[10000,'40 – 60'],[12000,'50 – 70'],[14000,'60 – 80'],[16000,'70 – 90']];
+const ehero=`<section class="ehero"><div class="eh-txt"><span class="kick">${t('heroK')}</span><h1>${t('heroT')}</h1><p>${t('heroP')}</p>
+<div class="ctas"><a href="#/shop" class="btn">${t('cta1')}</a><a class="btn ghost" target="_blank" rel="noopener" href="${waLink(L=='ar'?'السلام عليكم':'Bonjour')}">${t('cta2')}</a></div>
+<ul class="eh-meta"><li><b>58</b><span>${L=='ar'?'ولاية توصيل':'wilayas livrées'}</span></li><li><b>24</b><span>${L=='ar'?'شهر ضمان':'mois de garantie'}</span></li><li><b>COD</b><span>${L=='ar'?'الدفع عند الاستلام':'paiement à la livraison'}</span></li></ul></div>
+<div class="eh-vis"><span class="disc"></span><img class="e1" src="${img('c_886445432')}" alt=""><img class="e2" src="${img('c_905724499')}" alt=""><img class="e3" src="${img('c_808451331')}" alt=""><span class="tagp">Tirex 4 en 1 <b>${fmt(46000)}</b></span></div></section>`;
+if(V=='1')return ehero+homeRest();
 return `<section class="hero"><div class="hx"><span class="kick">${t('heroK')}</span><h1>${t('heroT')}</h1><p>${t('heroP')}</p>
 <div class="ctas"><a href="#/shop" class="btn">${t('cta1')}</a><a class="btn ghost" target="_blank" rel="noopener" href="${waLink(L=='ar'?'السلام عليكم، أريد الاستفسار عن':'Bonjour, je souhaite un renseignement sur')}">${t('cta2')}</a></div>
 <div class="brands">${['Condor','Midea','Brandt','Bomann','Sonashi','Géant','Ariston','Atlas','Nardi','Cobra'].map(b=>`<span>${b}</span>`).join('')}</div></div>
 <div class="hv wm"><img src="${img('cover')}" alt=""><div class="hcard"><img src="${img('888450738')}" alt=""><div><small>Géant · 11 KW</small><b>${fmt(42500)}</b></div></div></div></section>
 ${V=='2'?`<div class="marq"><div>${Array(2).fill(A.cats.map(c=>`<span>${c.ic} ${cn(c)}</span>`).join('')+`<span>🚚 ${t('r1')}</span><span>💵 ${t('r2')}</span>`).join('')}</div></div>`:''}
 <section class="reas">${[['🚚','r1','r1s'],['💵','r2','r2s'],['🛡️','r3','r3s'],['🔧','r4','r4s']].map(r=>`<div class="rv"><i>${r[0]}</i><b>${t(r[1])}</b><small>${t(r[2])}</small></div>`).join('')}</section>
-<section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id);const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm"><img loading="lazy" src="${img(p.im[0])}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id);const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${p.im[0].startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(p.im[0])}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
 <section class="sec"><div class="sh"><h2>${t('best')}</h2><a href="#/shop">${t('all')} →</a></div><div class="grid">${f.map(card).join('')}</div></section>
-<section class="promo wm"><img loading="lazy" src="${img(tb.im[0])}" alt=""><div><span class="kick">-${Math.round((1-tb.pr/tb.old)*100)}%</span><h2>${t('promoT')}</h2><p>${t('promoP')}</p><div class="pr"><b>${fmt(tb.pr)}</b><s>${fmt(tb.old)}</s></div><a href="#/p/tabouna" class="btn">${t('buy')}</a></div></section>
+<section class="promo wm"><img loading="lazy" class="${tb.im[0].startsWith('c_')?'pcut':''}" src="${img(tb.im[0])}" alt=""><div><span class="kick">-${Math.round((1-tb.pr/tb.old)*100)}%</span><h2>${t('promoT')}</h2><p>${t('promoP')}</p><div class="pr"><b>${fmt(tb.pr)}</b><s>${fmt(tb.old)}</s></div><a href="#/p/tabouna" class="btn">${t('buy')}</a></div></section>
 <section class="sec"><div class="sh"><h2>🔥 ${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
 <section class="guide rv"><div><h2>${t('guideT')}</h2><p>${t('guideP')}</p></div><table>${gz.map(g=>`<tr><td>${g[0].toLocaleString('fr-FR')} kcal/h</td><td>→</td><td><b>${g[1]} m²</b></td></tr>`).join('')}</table><p class="warn">⚠️ ${L=='ar'?'التهوية و كاشف أول أكسيد الكربون ضروريان.':'Aération et détecteur de CO indispensables.'}</p></section>
 <section class="sec"><div class="sh"><h2>💧 ${cn(A.cats[1])}</h2><a href="#/shop?c=eau">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='eau').map(card).join('')}</div></section>
 ${storeBlock()}`}
-function storeBlock(){return `<section class="store"><div class="sh"><h2>${t('storeT')}</h2></div><p>${t('storeP')}</p><div class="gal">${A.store.map((k,i)=>`<div class="g wm rv" style="--i:${i}"><img loading="lazy" src="${img(k)}" alt=""></div>`).join('')}</div>
-<div class="visit"><div><b>📍 ${L=='ar'?S.addr_ar:S.addr_fr}</b><span>🕘 ${t('hours')}</span><span>📞 <a href="tel:${S.telI}">${S.tel}</a></span></div>
-<iframe loading="lazy" title="map" src="https://www.google.com/maps?q=Gharda%C3%AFa%20Alg%C3%A9rie&output=embed"></iframe></div></section>`}
+function homeRest(){const tb=P('tabouna'),f=A.p.filter(p=>p.tag);const gz=[[10000,'40 – 60'],[12000,'50 – 70'],[14000,'60 – 80'],[16000,'70 – 90']];return `
+${V=='2'?`<div class="marq"><div>${Array(2).fill(A.cats.map(c=>`<span>${c.ic} ${cn(c)}</span>`).join('')+`<span>🚚 ${t('r1')}</span><span>💵 ${t('r2')}</span>`).join('')}</div></div>`:''}
+<section class="reas">${[['🚚','r1','r1s'],['💵','r2','r2s'],['🛡️','r3','r3s'],['🔧','r4','r4s']].map(r=>`<div class="rv"><i>${r[0]}</i><b>${t(r[1])}</b><small>${t(r[2])}</small></div>`).join('')}</section>
+<section class="sec"><div class="sh"><h2>${t('cats')}</h2></div><div class="cats">${A.cats.map((c,i)=>{const p=A.p.find(x=>x.cat==c.id);const n=A.p.filter(x=>x.cat==c.id).length;return `<a href="#/shop?c=${c.id}" class="cat rv" style="--i:${i}"><span class="ci wm ${p.im[0].startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(p.im[0])}" alt=""></span><b>${cn(c)}</b><small>${n} ${t('res')}</small></a>`}).join('')}</div></section>
+<section class="sec"><div class="sh"><h2>${t('best')}</h2><a href="#/shop">${t('all')} →</a></div><div class="grid">${f.map(card).join('')}</div></section>
+<section class="promo wm"><img loading="lazy" class="${tb.im[0].startsWith('c_')?'pcut':''}" src="${img(tb.im[0])}" alt=""><div><span class="kick">-${Math.round((1-tb.pr/tb.old)*100)}%</span><h2>${t('promoT')}</h2><p>${t('promoP')}</p><div class="pr"><b>${fmt(tb.pr)}</b><s>${fmt(tb.old)}</s></div><a href="#/p/tabouna" class="btn">${t('buy')}</a></div></section>
+<section class="sec"><div class="sh"><h2>🔥 ${cn(A.cats[0])}</h2><a href="#/shop?c=chauffage">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='chauffage').slice(0,4).map(card).join('')}</div></section>
+<section class="guide rv"><div><h2>${t('guideT')}</h2><p>${t('guideP')}</p></div><table>${gz.map(g=>`<tr><td>${g[0].toLocaleString('fr-FR')} kcal/h</td><td>→</td><td><b>${g[1]} m²</b></td></tr>`).join('')}</table><p class="warn">⚠️ ${L=='ar'?'التهوية و كاشف أول أكسيد الكربون ضروريان.':'Aération et détecteur de CO indispensables.'}</p></section>
+<section class="sec"><div class="sh"><h2>💧 ${cn(A.cats[1])}</h2><a href="#/shop?c=eau">${t('all')} →</a></div><div class="grid">${A.p.filter(p=>p.cat=='eau').map(card).join('')}</div></section>
+${storeBlock()}`}
+function storeBlock(){return `<section class="store"><div class="st-g"><div class="st-img wm"><img loading="lazy" src="${img('cover')}" alt="AO Electro Ghardaïa"></div>
+<div class="st-txt"><span class="kick">${t('about')}</span><h2>${t('storeT')}</h2><p>${t('storeP')}</p>
+<ul><li>📍 ${L=='ar'?S.addr_ar:S.addr_fr}</li><li>🕘 ${t('hours')}</li><li>📞 <a href="tel:${S.telI}">${S.tel}</a></li></ul>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Gharda%C3%AFa">${L=='ar'?'الاتجاهات':'Itinéraire'}</a></div></div></section>`}
 function shop(qs){const c=qs.get('c')||'',q=(qs.get('q')||'').toLowerCase(),so=qs.get('s')||'0',b=qs.get('b')||'';
 let r=A.p.filter(p=>(!c||p.cat==c)&&(!b||p.b==b)&&(!q||(p.fr+p.ar+p.b).toLowerCase().includes(q)));
 if(so=='1')r.sort((a,b)=>a.pr-b.pr);if(so=='2')r.sort((a,b)=>b.pr-a.pr);
@@ -97,7 +113,7 @@ return `<section class="shopw"><div class="crumb"><a href="#/">${t('home')}</a> 
 function prod(id){const p=P(id);if(!p)return shop(new URLSearchParams());const sp=L=='ar'?p.sa:p.s,c=A.cats.find(x=>x.id==p.cat);
 const rel=A.p.filter(x=>x.cat==p.cat&&x.id!=p.id).slice(0,4);
 return `<section class="pd"><div class="crumb"><a href="#/">${t('home')}</a> / <a href="#/shop?c=${c.id}">${cn(c)}</a> / ${esc(nm(p))}</div>
-<div class="pdg"><div class="gl"><div class="main wm" id="mi">${badge(p)}<img id="mimg" src="${img(p.im[0])}" alt="${esc(p.fr)}"></div>${p.im.length>1?`<div class="th">${p.im.map((k,i)=>`<button data-im="${k}" class="${i?'':'on'}"><img loading="lazy" src="${img(k)}" alt=""></button>`).join('')}</div>`:''}</div>
+<div class="pdg"><div class="gl"><div class="main wm ${p.im[0].startsWith('c_')?'cut':''}" id="mi">${badge(p)}<img id="mimg" src="${img(p.im[0])}" alt="${esc(p.fr)}"></div>${p.im.length>1?`<div class="th">${p.im.map((k,i)=>`<button data-im="${k}" class="${i?'':'on'} ${k.startsWith('c_')?'cut':''}"><img loading="lazy" src="${img(k)}" alt=""></button>`).join('')}</div>`:''}</div>
 <div class="info"><span class="br">${esc(p.b)}</span><h1>${esc(nm(p))}</h1><div class="pr big"><b id="pp">${fmt(p.pr)}</b>${p.old?`<s>${fmt(p.old)}</s>`:''}</div>
 <p class="stk ${p.stock===0?'no':''}">${p.stock===0?'● '+t('out'):'● '+(L=='ar'?'متوفر في المحل':'En stock à Ghardaïa')}</p>
 ${p.v?`<div class="opt"><label>${t('model')}</label><div class="vs">${p.v.map((x,i)=>`<button class="${i?'':'on'}" data-v="${i}">${esc(x)}</button>`).join('')}</div></div>`:''}
@@ -109,7 +125,7 @@ ${p.v?`<div class="opt"><label>${t('model')}</label><div class="vs">${p.v.map((x
 ${rel.length?`<div class="sh"><h2>${t('rel')}</h2></div><div class="grid">${rel.map(card).join('')}</div>`:''}</section>`}
 function vprice(p,vi){if(!p.v||!vi)return p.pr;const m=p.v[vi].match(/\+([\d ]+)/);return p.pr+(m?parseInt(m[1].replace(/ /g,'')):0)}
 function bindProd(id){const p=P(id);let vi=0,q=1;
-document.querySelectorAll('[data-im]').forEach(b=>b.onclick=()=>{$('#mimg').src=img(b.dataset.im);document.querySelectorAll('[data-im]').forEach(x=>x.classList.toggle('on',x==b))});
+document.querySelectorAll('[data-im]').forEach(b=>b.onclick=()=>{$('#mimg').src=img(b.dataset.im);$('#mi').classList.toggle('cut',b.dataset.im.startsWith('c_'));document.querySelectorAll('[data-im]').forEach(x=>x.classList.toggle('on',x==b))});
 document.querySelectorAll('button[data-v]').forEach(b=>b.onclick=()=>{vi=+b.dataset.v;document.querySelectorAll('button[data-v]').forEach(x=>x.classList.toggle('on',x==b));$('#pp').textContent=fmt(vprice(p,vi))});
 document.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{q=Math.max(1,Math.min(9,q+ +b.dataset.q));$('#qv').textContent=q});
 const go=o=>{addCart(p.id,vi,q);if(o)location.hash='#/checkout';else openCart(1)};
