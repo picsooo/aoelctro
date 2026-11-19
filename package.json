@@ -1,0 +1,10 @@
+{
+ "name": "ao-electro",
+ "private": true,
+ "scripts": {
+  "build": "node build.js"
+ },
+ "dependencies": {
+  "javascript-obfuscator": "^4.1.1"
+ }
+}
